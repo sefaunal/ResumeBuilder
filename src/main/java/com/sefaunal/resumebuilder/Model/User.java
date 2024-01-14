@@ -3,6 +3,7 @@ package com.sefaunal.resumebuilder.Model;
 import com.sefaunal.resumebuilder.Annotation.UniqueEmail;
 import com.sefaunal.resumebuilder.Annotation.UniqueUsername;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,20 +26,25 @@ public class User implements UserDetails {
     private String ID;
 
     @NotNull
+    @Size(min = 1, max = 75)
     private String firstName;
 
     @NotNull
+    @Size(min = 1, max = 75)
     private String lastName;
 
     @NotNull
     @UniqueUsername
+    @Size(min = 2, max = 75)
     private String username;
 
     @NotNull
     @UniqueEmail
+    @Size(min = 2, max = 75)
     private String email;
 
     @NotNull
+    @Size(min = 8, max = 75)
     private String password;
 
     private String role;

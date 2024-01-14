@@ -6942,6 +6942,6 @@
   font-family: "boxicons";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/boxicons/boxicons.eot");
-  src: url("../fonts/boxicons/boxicons.eot") format("embedded-opentype"), url("../fonts/boxicons/boxicons.woff2") format("woff2"), url("../fonts/boxicons/boxicons.woff") format("woff"), url("../fonts/boxicons/boxicons.ttf") format("truetype"), url("../fonts/boxicons/boxicons.svg?#boxicons") format("svg");
+  src: url("/static/fonts/boxicons/boxicons.eot");
+  src: url("/static/fonts/boxicons/boxicons.eot") format("embedded-opentype"), url("/static/fonts/boxicons/boxicons.woff2") format("woff2"), url("/static/fonts/boxicons/boxicons.woff") format("woff"), url("/static/fonts/boxicons/boxicons.ttf") format("truetype"), url("/static/fonts/boxicons/boxicons.svg?#boxicons") format("svg");
 }

@@ -1,6 +1,7 @@
 package com.sefaunal.resumebuilder.Config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,6 +19,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
+    @Value("${remember.secret-key}")
+    private String REMEMBER_ME_SECRET_KEY;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -30,11 +34,15 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/auth/login")
                         .permitAll())
+                .rememberMe(remember -> remember
+                        .key(REMEMBER_ME_SECRET_KEY)
+                        .tokenValiditySeconds(604800)
+                        .rememberMeParameter("remember-me"))
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                        .logoutSuccessUrl("/auth/login")
+                        .logoutSuccessUrl("/auth/login?logout")
                         .permitAll())
                 .authenticationProvider(authenticationProvider);
         return http.build();
