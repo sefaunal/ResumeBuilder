@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
     @GetMapping("/resume")
     public String resumePage() {
-        return "MaintenancePage";
+        return "ResumePage";
     }
 }

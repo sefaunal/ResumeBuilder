@@ -46,14 +46,6 @@
 
             <p th:if="${user == null}"><a href="/auth/login" class="btn btn-primary ftco-animate">Get Started</a></p>
 
-            <p th:if="${user != null}"><a href="/user/resume" class="btn btn-primary ftco-animate">My Resume</a></p>
-
-            <form th:if="${user != null}" th:action="@{/auth/logout}" method="POST">
-              <p>
-                <button type="submit" class="btn btn-primary ftco-animate">Logout</button>
-              </p>
-            </form>
-
           </div>
         </div>
       </div>

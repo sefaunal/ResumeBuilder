@@ -31,5 +31,5 @@ Resume Builder using Spring Boot, Thymeleaf & MongoDB
 ### <p align="center">404 Not Found Page</p>
 ![Screenshot 2024-01-15 at 08 43 51](https://github.com/sefaunal/ResumeBuilder/assets/83312431/f15a62aa-b262-476c-b011-e15033305cf4)
 
-### <p align="center">500 Internal Server Error Page</p>
-![Screenshot 2024-01-15 at 08 45 20](https://github.com/sefaunal/ResumeBuilder/assets/83312431/5870bed1-08de-476d-bbf6-2ee10f9c56fd)
+### <p align="center">Generic Error Page</p>
+![Screenshot 2024-01-15 at 19 36 31](https://github.com/sefaunal/ResumeBuilder/assets/83312431/8bfce4cd-b16a-4cca-bd9d-f9d4a7fd1a82)
