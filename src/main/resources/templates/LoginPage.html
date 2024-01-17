@@ -111,12 +111,26 @@
 
               <form id="formAuthentication" class="mb-3" th:action="@{/auth/login}" method="post">
 
-                <div th:if="${param.error}" class="">
-                  Wrong Email or Password!
-                </div>
-
-                <div th:if="${param.logout}" class="">
-                  Successfully Logged Out!
+                <!-- Modal -->
+                <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 th:if="${param.logout}" class="modal-title">Logout</h5>
+                        <h5 th:if="${param.error}" class="modal-title">Bad Credentials</h5>
+                        <h5 th:if="${registered}" class="modal-title">Success</h5>
+                        <button
+                                id="close-modal"
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                      </div>
+                      <div th:if="${param.logout}" class="modal-body">Successfully Logged Out!</div>
+                      <div th:if="${param.error}" class="modal-body">Wrong Email or Password!</div>
+                      <div th:if="${registered}" class="modal-body">Your Account Has Been Created Successfully!</div>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="mb-3">
@@ -170,6 +184,21 @@
         </div>
       </div>
     </div>
+
+    <script th:if="${param.error} or ${param.logout} or ${registered}">
+      window.addEventListener("load", function() {
+        const modal = document.getElementById("modalCenter");
+        modal.classList.add("show");
+        modal.style.display = "block";
+        modal.style.backdropFilter = "blur(10px)";
+
+        const closeButton = document.getElementById("close-modal")
+        closeButton.addEventListener("click", function() {
+          modal.classList.remove("show");
+          modal.style.display = "none";
+        });
+      });
+    </script>
 
     <script src="/static/js/Sneat/jquery.js"></script>
     <script src="/static/js/Sneat/popper.js"></script>

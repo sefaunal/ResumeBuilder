@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,10 +52,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ModelAndView completeRegistration(@Valid @ModelAttribute User user) {
+    public ModelAndView completeRegistration(@Valid @ModelAttribute User user, Model model) {
         userService.createUser(user);
 
-        return new ModelAndView("/Home");
+        model.addAttribute("registered", true);
+        return new ModelAndView("LoginPage");
     }
 
     @GetMapping("/reset/password")
