@@ -12,6 +12,9 @@ spring:
     format:
       date: yyyy-MM-dd
     static-path-pattern: /static/**
+  servlet:
+    multipart:
+      max-file-size: 15MB
 
 remember:
   secret-key: 0Ufaswi33sl2lbe5widriwohedoxuphu8h@9athuw3a7tono
