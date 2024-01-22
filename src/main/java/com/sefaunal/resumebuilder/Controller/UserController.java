@@ -1,7 +1,13 @@
 package com.sefaunal.resumebuilder.Controller;
 
+import com.sefaunal.resumebuilder.Model.Experience;
+import com.sefaunal.resumebuilder.Model.Project;
+import com.sefaunal.resumebuilder.Model.Skill;
 import com.sefaunal.resumebuilder.Model.User;
 import com.sefaunal.resumebuilder.Request.UserRequest;
+import com.sefaunal.resumebuilder.Service.ExperienceService;
+import com.sefaunal.resumebuilder.Service.ProjectService;
+import com.sefaunal.resumebuilder.Service.SkillService;
 import com.sefaunal.resumebuilder.Service.UserService;
 import com.sefaunal.resumebuilder.Utils.CommonUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,12 +15,16 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.Collection;
 
 /**
  * @author github.com/sefaunal
@@ -25,6 +35,12 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    private final SkillService skillService;
+
+    private final ExperienceService experienceService;
+
+    private final ProjectService projectService;
 
     @GetMapping("/resume")
     public ModelAndView resumePage(Principal principal, Model model) {
@@ -40,6 +56,24 @@ public class UserController {
 
         model.addAttribute("user", user);
         return new ModelAndView("AccountPage");
+    }
+
+    @GetMapping("/resume/details")
+    public ModelAndView resumeDetailsPage(Principal principal, Model model) {
+        User user = userService.findUserByUsername(principal.getName());
+
+        Collection<Skill> coreSkills = skillService.findAllCoreSkillsByUserID(user.getID());
+        Collection<Skill> otherSkills = skillService.findAllOtherSkillsByUserID(user.getID());
+        Collection<Experience> experiences = experienceService.findAllExperiencesByUserID(user.getID());
+        Collection<Project> projects = projectService.findAllProjectsByUserID(user.getID());
+
+        model.addAttribute("user", user);
+        model.addAttribute("coreSkills", coreSkills);
+        model.addAttribute("otherSkills", otherSkills);
+        model.addAttribute("workExperiences", experiences);
+        model.addAttribute("latestWorks", projects);
+
+        return new ModelAndView("ResumeDetails");
     }
 
     @PostMapping("/profile/password/update")
