@@ -59,6 +59,28 @@
                 <!-- Content -->
 
                 <div class="container-xxl flex-grow-1 container-p-y">
+
+                    <!-- Toast with Placements -->
+                    <div
+                            id="notification-toast"
+                            class="bs-toast toast toast-placement-ex m-2 fade top-0 end-0"
+                            role="alert"
+                            aria-live="assertive"
+                            aria-atomic="true"
+                            data-bs-delay="2000">
+                        <div class="toast-header">
+                            <i class="bx bx-bell me-2"></i>
+                            <div class="me-auto fw-medium">Resume Builder</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div th:if="${passwordChanged}" class="toast-body">Your password has been successfully changed</div>
+                        <div th:if="${passwordChangedFail}" class="toast-body">Failed to update password! Please check if the old password you entered is correct</div>
+                        <div th:if="${profileUpdated}" class="toast-body">Your profile details has been successfully updated</div>
+                        <div th:if="${profileUpdatedFail}" class="toast-body">Failed to update details! Please check if the password you entered is correct</div>
+                        <div th:if="${accountDeletionFail}" class="toast-body">Failed to delete account! Please check if the password you entered is correct</div>
+                    </div>
+                    <!-- Toast with Placements -->
+
                     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
 
                     <div class="row">
@@ -195,6 +217,7 @@
                                                     <label class="form-label" for="basic-default-password12">Password</label>
                                                     <div class="input-group">
                                                         <input
+                                                                minlength="8"
                                                                 type="password"
                                                                 name="password"
                                                                 class="form-control"
@@ -225,9 +248,11 @@
                                     <form id="formPasswordUpdate" th:action="@{/user/profile/password/update}" method="post">
                                         <div class="mb-3 col-md-6">
                                             <div class="form-password-toggle">
-                                                <label class="form-label">Old Password</label>
+                                                <label class="form-label" for="oldPassword">Old Password</label>
                                                 <div class="input-group">
                                                     <input
+                                                            minlength="8"
+                                                            id="oldPassword"
                                                             type="password"
                                                             name="oldPassword"
                                                             class="form-control"
@@ -242,9 +267,11 @@
 
                                         <div class="mb-3 col-md-6">
                                             <div class="form-password-toggle">
-                                                <label class="form-label">New Password</label>
+                                                <label class="form-label" for="newPassword">New Password</label>
                                                 <div class="input-group">
                                                     <input
+                                                            minlength="8"
+                                                            id="newPassword"
                                                             type="password"
                                                             name="newPassword"
                                                             class="form-control"
@@ -274,6 +301,7 @@
                                     <form id="deleteAccount" method="POST" th:action="@{/user/profile/account/deactivate}">
                                         <div class="form-check mb-3">
                                             <input
+                                                    minlength="8"
                                                     class="form-check-input"
                                                     type="checkbox"
                                                     name="accountActivation"
@@ -287,6 +315,7 @@
                                                 <label class="form-label" for="account-deletion-password">Password</label>
                                                 <div class="input-group">
                                                     <input
+                                                            minlength="8"
                                                             type="password"
                                                             name="confirmPassword"
                                                             class="form-control"
@@ -324,6 +353,21 @@
 </div>
 <!-- / Layout wrapper -->
 
+    <script th:if="${passwordChanged} or ${profileUpdated}">
+        window.addEventListener("load", function() {
+            const modal = document.getElementById("notification-toast");
+            modal.classList.add("show");
+            modal.classList.add("bg-secondary");
+        });
+    </script>
+
+    <script th:if="${passwordChangedFail} or ${profileUpdatedFail} or ${accountDeletionFail}">
+        window.addEventListener("load", function() {
+            const modal = document.getElementById("notification-toast");
+            modal.classList.add("show");
+            modal.classList.add("bg-danger");
+        });
+    </script>
 
     <script src="/static/js/Sneat/jquery.js"></script>
     <script src="/static/js/Sneat/popper.js"></script>

@@ -71,6 +71,7 @@ public class UserService {
         if (isOldPasswordCorrect) {
             user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
             userRepository.save(user);
+            return true;
         }
 
         return false;
@@ -86,6 +87,7 @@ public class UserService {
             originalUser.setEmail(userRequest.getEmail());
 
             userRepository.save(originalUser);
+            return true;
         }
         return false;
     }

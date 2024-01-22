@@ -47,7 +47,7 @@ public class UserController {
         if (userService.updateUserPassword(oldPassword, newPassword)) {
             model.addAttribute("passwordChanged", true);
         } else {
-            model.addAttribute("passwordChanged", false);
+            model.addAttribute("passwordChangedFail", true);
         }
 
         model.addAttribute("user", userService.findUserByUsername(CommonUtils.getUserInfo()));
@@ -59,7 +59,7 @@ public class UserController {
         if  (userService.updateUserProfile(userRequest)) {
             model.addAttribute("profileUpdated", true);
         } else {
-            model.addAttribute("profileUpdated", false);
+            model.addAttribute("profileUpdatedFail", true);
         }
         model.addAttribute("user", userService.findUserByUsername(CommonUtils.getUserInfo()));
         return new ModelAndView("AccountPage");
@@ -74,10 +74,14 @@ public class UserController {
     }
 
     @PostMapping("/profile/account/deactivate")
-    public RedirectView deactivateAccount(HttpServletRequest httpServletRequest, @RequestParam String confirmPassword) {
+    public ModelAndView deactivateAccount(HttpServletRequest httpServletRequest, @RequestParam String confirmPassword, Model model) {
         if (userService.deactivateUser(httpServletRequest, confirmPassword)) {
-            return new RedirectView("/home");
+            model.addAttribute("user", null);
+            return new ModelAndView("Home");
         }
-        return new RedirectView("/user/profile");
+
+        model.addAttribute("user", userService.findUserByUsername(CommonUtils.getUserInfo()));
+        model.addAttribute("accountDeletionFail", true);
+        return new ModelAndView("AccountPage");
     }
 }
