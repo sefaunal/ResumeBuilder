@@ -1,14 +1,16 @@
 package com.sefaunal.resumebuilder.Controller;
 
+import com.sefaunal.resumebuilder.Exception.PasswordException;
+import com.sefaunal.resumebuilder.Model.Skill;
 import com.sefaunal.resumebuilder.Model.User;
+import com.sefaunal.resumebuilder.Request.SkillRequest;
 import com.sefaunal.resumebuilder.Service.SkillService;
 import com.sefaunal.resumebuilder.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
@@ -48,6 +50,27 @@ public class SkillController {
         User user = userService.findUserByUsername(principal.getName());
 
         skillService.deleteRecordByID(ID, user.getID());
+
+        return new RedirectView("/user/resume/details");
+    }
+
+    @GetMapping("/update")
+    public ModelAndView updateSkillPage(@RequestParam String ID, Model model, Principal principal) {
+        User user = userService.findUserByUsername(principal.getName());
+        Skill skill = skillService.findRecordByID(ID);
+
+        model.addAttribute("user", user);
+        model.addAttribute("skill", skill);
+        model.addAttribute("updateType", "SKILL");
+
+        return new ModelAndView("UpdatePage");
+    }
+
+    @PostMapping("/update")
+    public RedirectView updateSkillRecord(@ModelAttribute SkillRequest skillRequest, Principal principal) {
+        User user = userService.findUserByUsername(principal.getName());
+
+        skillService.updateRecordByID(skillRequest, user.getPassword(), user.getID());
 
         return new RedirectView("/user/resume/details");
     }

@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * @author github.com/sefaunal
@@ -12,5 +13,7 @@ import java.util.Collection;
  */
 @Repository
 public interface ExperienceRepository extends MongoRepository<Experience, String> {
+    Optional<Experience> findByID(String ID);
+
     Collection<Experience> findAllByUserID(String userID);
 }

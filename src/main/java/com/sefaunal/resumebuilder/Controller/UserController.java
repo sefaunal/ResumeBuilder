@@ -15,13 +15,15 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.Collection;
@@ -59,7 +61,12 @@ public class UserController {
     }
 
     @GetMapping("/resume/details")
-    public ModelAndView resumeDetailsPage(Principal principal, Model model) {
+    public RedirectView redirectToResumeDetailsPage() {
+        return new RedirectView("/user/resume/details/none");
+    }
+
+    @GetMapping("/resume/details/{errorStatus}")
+    public ModelAndView resumeDetailsPage(@PathVariable String errorStatus, Principal principal, Model model) {
         User user = userService.findUserByUsername(principal.getName());
 
         Collection<Skill> coreSkills = skillService.findAllCoreSkillsByUserID(user.getID());
@@ -72,6 +79,8 @@ public class UserController {
         model.addAttribute("otherSkills", otherSkills);
         model.addAttribute("workExperiences", experiences);
         model.addAttribute("latestWorks", projects);
+
+        model.addAttribute("errorStatus", errorStatus);
 
         return new ModelAndView("ResumeDetails");
     }

@@ -66,9 +66,8 @@ public class UserService {
 
     public Boolean updateUserPassword(String oldPassword, String newPassword) {
         User user = findUserByUsername(CommonUtils.getUserInfo());
-        boolean isOldPasswordCorrect = new BCryptPasswordEncoder().matches(oldPassword, user.getPassword());
 
-        if (isOldPasswordCorrect) {
+        if (CommonUtils.checkPasswordsMatch(oldPassword, user.getPassword())) {
             user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
             userRepository.save(user);
             return true;
@@ -79,9 +78,8 @@ public class UserService {
 
     public Boolean updateUserProfile(UserRequest userRequest) {
         User originalUser = findUserByUsername(CommonUtils.getUserInfo());
-        boolean isOldPasswordCorrect = new BCryptPasswordEncoder().matches(userRequest.getPassword(), originalUser.getPassword());
 
-        if (isOldPasswordCorrect) {
+        if (CommonUtils.checkPasswordsMatch(userRequest.getPassword(), originalUser.getPassword())) {
             originalUser.setFirstName(userRequest.getFirstName());
             originalUser.setLastName(userRequest.getLastName());
             originalUser.setEmail(userRequest.getEmail());
@@ -94,9 +92,8 @@ public class UserService {
 
     public Boolean deactivateUser(HttpServletRequest httpServletRequest, String confirmPassword) {
         User user = findUserByUsername(CommonUtils.getUserInfo());
-        boolean isConfirmPasswordCorrect = new BCryptPasswordEncoder().matches(confirmPassword, user.getPassword());
 
-        if (isConfirmPasswordCorrect) {
+        if (CommonUtils.checkPasswordsMatch(confirmPassword, user.getPassword())) {
             userRepository.deleteByUsername(CommonUtils.getUserInfo());
 
             // Clear SecurityContext
