@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+</head>
+<body>
+
+
+<!--    Project Update     -->
+<div th:fragment="project" class="card mb-4">
+    <h5 class="card-header">Update Project</h5>
+    <div class="card-body">
+
+        <form id="updateSkill" enctype="multipart/form-data" th:action="@{/user/project/update}" method="post">
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="projectID">Project ID</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${project.ID}"
+                                name="ID"
+                                type="text"
+                                class="form-control"
+                                id="projectID"
+                                placeholder="Skill ID"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                                readonly
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="titleInput">Project Title</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${project.title}"
+                                type="text"
+                                name="title"
+                                class="form-control"
+                                id="titleInput"
+                                placeholder="Project Title"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-0">
+                    <label for="projectDesc" class="form-label">Job Description</label>
+                    <textarea
+                            th:utext="${project.description}"
+                            class="form-control"
+                            id="projectDesc"
+                            name="description"
+                            rows="3"
+                            placeholder="Description"
+                            required></textarea>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="currentImage">Current Project Image</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${project.imageURI}"
+                                type="text"
+                                class="form-control"
+                                id="currentImage"
+                                placeholder="Current Project Image"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                                readonly
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">New Project Image</label>
+                        <input class="form-control" type="file" id="formFile" name="projectImage"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="form-password-toggle">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-group">
+                        <input
+                                minlength="8"
+                                id="password"
+                                type="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                aria-describedby="basic-default-password2"
+                                required
+                        />
+                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary me-2">Update Project</button>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

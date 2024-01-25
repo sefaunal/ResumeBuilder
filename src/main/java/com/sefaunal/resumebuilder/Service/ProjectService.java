@@ -1,7 +1,9 @@
 package com.sefaunal.resumebuilder.Service;
 
+import com.sefaunal.resumebuilder.Exception.PasswordException;
 import com.sefaunal.resumebuilder.Model.Project;
 import com.sefaunal.resumebuilder.Repository.ProjectRepository;
+import com.sefaunal.resumebuilder.Request.ProjectRequest;
 import com.sefaunal.resumebuilder.Utils.CommonUtils;
 import com.sefaunal.resumebuilder.Utils.ImageUtils;
 import lombok.RequiredArgsConstructor;
@@ -36,17 +38,49 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
+    public Project findRecordByID(String ID) {
+        return projectRepository.findByID(ID).orElseThrow();
+    }
+
     public Collection<Project> findAllProjectsByUserID(String userID) {
         return projectRepository.findAllByUserID(userID);
     }
 
     public void deleteRecordByID(String projectID, String userID) {
-        Project project = projectRepository.findById(projectID).orElseThrow();
+        Project project = projectRepository.findByID(projectID).orElseThrow();
 
         if (!project.getUserID().equals(userID)) {
             throw new AccessDeniedException("IDs Don't Match. You Are Not Authorized!");
         }
 
         projectRepository.deleteById(projectID);
+    }
+
+    public void updateRecordByID(ProjectRequest projectRequest, MultipartFile projectImage, String userPassword, String userID) {
+        Project project = projectRepository.findByID(projectRequest.getID()).orElseThrow();
+
+        if (!project.getUserID().equals(userID)) {
+            throw new AccessDeniedException("IDs Don't Match. You Are Not Authorized!");
+        }
+
+        if (!CommonUtils.checkPasswordsMatch(projectRequest.getPassword(), userPassword)) {
+            throw new PasswordException("Passwords Does Not Match");
+        }
+
+        if (!projectImage.isEmpty()) {
+            String uniqueFilename = ImageUtils.generateUniqueFilename(
+                    CommonUtils.getUserInfo(),
+                    Objects.requireNonNull(projectImage.getContentType())
+            );
+
+            String imageURI = ImageUtils.firebaseUploadImage(projectImage, uniqueFilename);
+
+            project.setImageURI(imageURI);
+        }
+
+        project.setTitle(projectRequest.getTitle());
+        project.setDescription(projectRequest.getTitle());
+
+        projectRepository.save(project);
     }
 }

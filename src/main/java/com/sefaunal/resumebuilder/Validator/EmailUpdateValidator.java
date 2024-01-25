@@ -8,7 +8,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 
 /**
- * @author sefaunal
+ * @author github.com/sefaunal
  * @since 2024-01-19
  */
 @RequiredArgsConstructor

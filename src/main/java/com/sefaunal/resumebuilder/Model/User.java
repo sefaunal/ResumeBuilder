@@ -53,6 +53,10 @@ public class User implements UserDetails {
 
     private Instant accountCreationDate;
 
+    private UserAboutMe aboutMe;
+
+    private UserVisibilitySettings visibilitySettings;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role));

@@ -1,9 +1,6 @@
 package com.sefaunal.resumebuilder.Controller;
 
-import com.sefaunal.resumebuilder.Model.Experience;
-import com.sefaunal.resumebuilder.Model.Project;
-import com.sefaunal.resumebuilder.Model.Skill;
-import com.sefaunal.resumebuilder.Model.User;
+import com.sefaunal.resumebuilder.Model.*;
 import com.sefaunal.resumebuilder.Request.UserRequest;
 import com.sefaunal.resumebuilder.Service.ExperienceService;
 import com.sefaunal.resumebuilder.Service.ProjectService;
@@ -60,6 +57,14 @@ public class UserController {
         return new ModelAndView("AccountPage");
     }
 
+    @GetMapping("/visibility")
+    public ModelAndView visibilityPage(Principal principal, Model model) {
+        User user = userService.findUserByUsername(principal.getName());
+
+        model.addAttribute("user", user);
+        return new ModelAndView("VisibilitySettings");
+    }
+
     @GetMapping("/resume/details")
     public RedirectView redirectToResumeDetailsPage() {
         return new RedirectView("/user/resume/details/none");
@@ -114,6 +119,13 @@ public class UserController {
 
         model.addAttribute("user", user);
         return new ModelAndView("AccountPage");
+    }
+
+    @PostMapping("/visibility/update")
+    public RedirectView updateVisibilitySettings(@ModelAttribute UserVisibilitySettings visibilitySettings, Principal principal) {
+        User user = userService.findUserByUsername(principal.getName());
+
+        return new RedirectView("/user/visibility");
     }
 
     @PostMapping("/profile/account/deactivate")

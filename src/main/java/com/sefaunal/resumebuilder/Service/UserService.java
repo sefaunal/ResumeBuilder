@@ -1,9 +1,11 @@
 package com.sefaunal.resumebuilder.Service;
 
 import com.sefaunal.resumebuilder.Model.User;
+import com.sefaunal.resumebuilder.Model.UserVisibilitySettings;
 import com.sefaunal.resumebuilder.Repository.UserRepository;
 import com.sefaunal.resumebuilder.Request.UserRequest;
 import com.sefaunal.resumebuilder.Utils.CommonUtils;
+import com.sefaunal.resumebuilder.Utils.Constants;
 import com.sefaunal.resumebuilder.Utils.ImageUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -45,9 +47,23 @@ public class UserService {
     }
 
     public void createUser(User user) {
+        UserVisibilitySettings visibilitySettings = new UserVisibilitySettings(
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+        );
+
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         user.setRole("USER");
         user.setAccountCreationDate(Instant.now());
+        user.setProfileImageURI(Constants.DEFAULT_IMAGE_URL);
+        user.setVisibilitySettings(visibilitySettings);
+
         userRepository.save(user);
     }
 
