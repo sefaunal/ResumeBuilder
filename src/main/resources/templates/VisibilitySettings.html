@@ -78,7 +78,6 @@
           </div>
           <!-- Toast with Placements -->
 
-
           <h4 class="fw-bold py-3 mb-4">
             <span class="text-muted fw-light">Account Settings /</span> Visibility
           </h4>
@@ -131,35 +130,99 @@
                     </tr>
 
                     <tr>
-                      <td class="text-nowrap">Account activity</td>
+                      <td class="text-nowrap">Show experience years count on your resume</td>
                       <td>
                         <div class="form-check d-flex justify-content-center">
-                          <input aria-label="" class="form-check-input" type="checkbox" id="defaultCheck4" checked />
+                          <input aria-label="" class="form-check-input" type="checkbox" name="showExperienceYearCount" th:checked="${user.getVisibilitySettings().isShowExperienceYearCount()}" />
                         </div>
                       </td>
                     </tr>
 
                     <tr>
-                      <td class="text-nowrap">A new browser used to sign in</td>
+                      <td class="text-nowrap">Show total project count on your resume</td>
                       <td>
                         <div class="form-check d-flex justify-content-center">
-                          <input class="form-check-input" type="checkbox" id="defaultCheck7" checked />
+                          <input class="form-check-input" type="checkbox" name="showProjectsCount" th:checked="${user.getVisibilitySettings().isShowProjectsCount()}" />
                         </div>
                       </td>
                     </tr>
 
                     <tr>
-                      <td class="text-nowrap">A new device is linked</td>
+                      <td class="text-nowrap">Show happy clients count on your resume</td>
                       <td>
                         <div class="form-check d-flex justify-content-center">
-                          <input class="form-check-input" type="checkbox" id="defaultCheck10" checked />
+                          <input class="form-check-input" type="checkbox" name="showHappyClientsCount" th:checked="${user.getVisibilitySettings().isShowHappyClientsCount()}" />
                         </div>
                       </td>
                     </tr>
+
+                    <tr>
+                      <td class="text-nowrap">Show about me section on your resume</td>
+                      <td>
+                        <div class="form-check d-flex justify-content-center">
+                          <input class="form-check-input" type="checkbox" name="showAboutMeSection" th:checked="${user.getVisibilitySettings().isShowAboutMeSection()}" />
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="text-nowrap">Show core skills on your resume</td>
+                      <td>
+                        <div class="form-check d-flex justify-content-center">
+                          <input class="form-check-input" type="checkbox" name="showCoreSkillsSection" th:checked="${user.getVisibilitySettings().isShowCoreSkillsSection()}" />
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="text-nowrap">Show other skills on your resume</td>
+                      <td>
+                        <div class="form-check d-flex justify-content-center">
+                          <input class="form-check-input" type="checkbox" name="showOtherSkillsSection" th:checked="${user.getVisibilitySettings().isShowOtherSkillsSection()}" />
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="text-nowrap">Show experiences section on your resume</td>
+                      <td>
+                        <div class="form-check d-flex justify-content-center">
+                          <input class="form-check-input" type="checkbox" name="showExperiencesSection" th:checked="${user.getVisibilitySettings().isShowExperiencesSection()}" />
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="text-nowrap">Show latest works section on your resume</td>
+                      <td>
+                        <div class="form-check d-flex justify-content-center">
+                          <input class="form-check-input" type="checkbox" name="showLatestWorksSection" th:checked="${user.getVisibilitySettings().isShowLatestWorksSection()}" />
+                        </div>
+                      </td>
+                    </tr>
+
                     </tbody>
                   </table>
 
                     <div class="card-body">
+
+                      <div class="form-password-toggle mb-3 col-md-4">
+                        <label class="form-label" for="basic-default-password12">Password</label>
+                        <div class="input-group">
+                          <input
+                                  minlength="8"
+                                  type="password"
+                                  name="confirmationPassword"
+                                  class="form-control"
+                                  id="basic-default-password12"
+                                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                  aria-describedby="basic-default-password2"
+                                  required
+                          />
+                          <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                        </div>
+                      </div>
+
                       <div class="row">
                         <div class="mt-4">
                           <button type="submit" class="btn btn-primary me-2">Save changes</button>

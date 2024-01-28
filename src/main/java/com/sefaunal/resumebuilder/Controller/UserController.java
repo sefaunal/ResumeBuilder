@@ -1,6 +1,11 @@
 package com.sefaunal.resumebuilder.Controller;
 
-import com.sefaunal.resumebuilder.Model.*;
+import com.sefaunal.resumebuilder.Model.Experience;
+import com.sefaunal.resumebuilder.Model.Project;
+import com.sefaunal.resumebuilder.Model.Skill;
+import com.sefaunal.resumebuilder.Model.User;
+import com.sefaunal.resumebuilder.Model.UserAboutMe;
+import com.sefaunal.resumebuilder.Model.UserVisibilitySettings;
 import com.sefaunal.resumebuilder.Request.UserRequest;
 import com.sefaunal.resumebuilder.Service.ExperienceService;
 import com.sefaunal.resumebuilder.Service.ProjectService;
@@ -43,9 +48,8 @@ public class UserController {
 
     @GetMapping("/resume")
     public ModelAndView resumePage(Principal principal, Model model) {
-        User user = userService.findUserByUsername(principal.getName());
+        setUserRelatedInfoToModel(principal, model);
 
-        model.addAttribute("user", user);
         return new ModelAndView("ResumePage");
     }
 
@@ -72,18 +76,7 @@ public class UserController {
 
     @GetMapping("/resume/details/{errorStatus}")
     public ModelAndView resumeDetailsPage(@PathVariable String errorStatus, Principal principal, Model model) {
-        User user = userService.findUserByUsername(principal.getName());
-
-        Collection<Skill> coreSkills = skillService.findAllCoreSkillsByUserID(user.getID());
-        Collection<Skill> otherSkills = skillService.findAllOtherSkillsByUserID(user.getID());
-        Collection<Experience> experiences = experienceService.findAllExperiencesByUserID(user.getID());
-        Collection<Project> projects = projectService.findAllProjectsByUserID(user.getID());
-
-        model.addAttribute("user", user);
-        model.addAttribute("coreSkills", coreSkills);
-        model.addAttribute("otherSkills", otherSkills);
-        model.addAttribute("workExperiences", experiences);
-        model.addAttribute("latestWorks", projects);
+        setUserRelatedInfoToModel(principal, model);
 
         model.addAttribute("errorStatus", errorStatus);
 
@@ -122,11 +115,52 @@ public class UserController {
     }
 
     @PostMapping("/visibility/update")
-    public RedirectView updateVisibilitySettings(@ModelAttribute UserVisibilitySettings visibilitySettings, Principal principal) {
+    public ModelAndView updateVisibilitySettings(@ModelAttribute UserVisibilitySettings visibilityRequest,
+                                                 @RequestParam String confirmationPassword,
+                                                 Model model) {
+        if (userService.updateVisibilitySettings(visibilityRequest, confirmationPassword)) {
+            model.addAttribute("visibilitySettingsUpdated", true);
+        } else {
+            model.addAttribute("visibilitySettingsUpdateFail", true);
+        }
+
+        model.addAttribute("user", userService.findUserByUsername(CommonUtils.getUserInfo()));
+        return new ModelAndView("VisibilitySettings");
+    }
+
+    @PostMapping("/about/add")
+    public RedirectView addAboutMe(@ModelAttribute UserAboutMe aboutMe) {
+        userService.addAboutMe(aboutMe);
+
+        return new RedirectView("/user/resume/details");
+    }
+
+    @GetMapping("/about/update")
+    public ModelAndView updateAboutMePage(Principal principal, Model model) {
         User user = userService.findUserByUsername(principal.getName());
 
-        return new RedirectView("/user/visibility");
+        model.addAttribute("user", user);
+        model.addAttribute("updateType", "ABOUT");
+
+        return new ModelAndView("UpdatePage");
     }
+
+    @PostMapping("/about/update")
+    public RedirectView updateAboutMe(@ModelAttribute UserAboutMe userAboutMe, String confirmationPassword) {
+        userService.updateUserAboutMe(userAboutMe, confirmationPassword);
+
+        return new RedirectView("/user/resume/details/success");
+    }
+
+    @GetMapping("/about/delete")
+    public RedirectView deleteAboutMe(Principal principal) {
+        User user = userService.findUserByUsername(principal.getName());
+
+        userService.deleteAboutMe(user);
+
+        return new RedirectView("/user/resume/details/success");
+    }
+
 
     @PostMapping("/profile/account/deactivate")
     public ModelAndView deactivateAccount(HttpServletRequest httpServletRequest, @RequestParam String confirmPassword, Model model) {
@@ -138,5 +172,20 @@ public class UserController {
         model.addAttribute("user", userService.findUserByUsername(CommonUtils.getUserInfo()));
         model.addAttribute("accountDeletionFail", true);
         return new ModelAndView("AccountPage");
+    }
+
+    private void setUserRelatedInfoToModel(Principal principal, Model model) {
+        User user = userService.findUserByUsername(principal.getName());
+
+        Collection<Skill> coreSkills = skillService.findAllCoreSkillsByUserID(user.getID());
+        Collection<Skill> otherSkills = skillService.findAllOtherSkillsByUserID(user.getID());
+        Collection<Experience> experiences = experienceService.findAllExperiencesByUserID(user.getID());
+        Collection<Project> projects = projectService.findAllProjectsByUserID(user.getID());
+
+        model.addAttribute("user", user);
+        model.addAttribute("coreSkills", coreSkills);
+        model.addAttribute("otherSkills", otherSkills);
+        model.addAttribute("workExperiences", experiences);
+        model.addAttribute("latestWorks", projects);
     }
 }

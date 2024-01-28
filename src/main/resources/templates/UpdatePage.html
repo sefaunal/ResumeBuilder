@@ -92,6 +92,10 @@
                                 <div th:replace="modals/UpdateProject :: project"></div>
                             </div>
 
+                            <div th:if="${updateType.equals('ABOUT')}">
+                                <div th:replace="modals/UpdateAboutMe :: aboutme"></div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

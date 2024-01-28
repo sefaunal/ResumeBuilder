@@ -36,10 +36,10 @@ public class AuthController {
                 User user = userService.findUserByUsername(principal.getName());
                 if (user.getRole().equals("ADMIN")){
                     httpServletResponse.sendRedirect("/admin/panel");
-                }else {
+                } else {
                     httpServletResponse.sendRedirect("/home");
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 LOG.error("Error Occurred {}", e.getMessage());
             }
         }

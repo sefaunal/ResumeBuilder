@@ -8,7 +8,6 @@ import lombok.Data;
  * @since 2024-01-25
  */
 @Data
-@AllArgsConstructor
 public class UserVisibilitySettings {
     private boolean showBriefIntroduction;
 
@@ -20,7 +19,9 @@ public class UserVisibilitySettings {
 
     private boolean showAboutMeSection;
 
-    private boolean showSkillsSection;
+    private boolean showCoreSkillsSection;
+
+    private boolean showOtherSkillsSection;
 
     private boolean showExperiencesSection;
 

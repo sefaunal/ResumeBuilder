@@ -73,6 +73,11 @@ public class ExperienceService {
             experience.formatEndDate(experienceRequest.getEndDate());
         }
 
+        if (experienceRequest.getEndDate() == null) {
+            experience.setEndDate(null);
+            experience.setFormattedEndDate(null);
+        }
+
         experienceRepository.save(experience);
     }
 }

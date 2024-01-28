@@ -8,13 +8,21 @@ import lombok.Data;
  */
 @Data
 public class UserAboutMe {
-    private Integer totalExperience;
+    private String briefIntroduction;
 
-    private Integer happyClientsCount;
+    private Integer experienceYearsCount;
 
     private Integer projectsCount;
 
-    private String briefIntroduction;
+    private Integer happyClientsCount;
 
     private String aboutMeSection;
+
+    public Boolean isEmpty() {
+        return briefIntroduction == null
+                || experienceYearsCount == null
+                || projectsCount == null
+                || happyClientsCount == null
+                || aboutMeSection == null;
+    }
 }

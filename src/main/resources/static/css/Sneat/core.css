@@ -18565,6 +18565,6 @@ html:not(.layout-footer-fixed) .content-wrapper {
   justify-content: space-between;
 }
 
-#uri {
+.desc-text {
   text-wrap: balance;
 }

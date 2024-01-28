@@ -1,6 +1,8 @@
 package com.sefaunal.resumebuilder.Service;
 
+import com.sefaunal.resumebuilder.Exception.PasswordException;
 import com.sefaunal.resumebuilder.Model.User;
+import com.sefaunal.resumebuilder.Model.UserAboutMe;
 import com.sefaunal.resumebuilder.Model.UserVisibilitySettings;
 import com.sefaunal.resumebuilder.Repository.UserRepository;
 import com.sefaunal.resumebuilder.Request.UserRequest;
@@ -10,6 +12,7 @@ import com.sefaunal.resumebuilder.Utils.ImageUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,22 +50,17 @@ public class UserService {
     }
 
     public void createUser(User user) {
-        UserVisibilitySettings visibilitySettings = new UserVisibilitySettings(
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true
-        );
+        UserVisibilitySettings visibilitySettings = new UserVisibilitySettings();
+        UserAboutMe aboutMe = new UserAboutMe();
 
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         user.setRole("USER");
         user.setAccountCreationDate(Instant.now());
         user.setProfileImageURI(Constants.DEFAULT_IMAGE_URL);
         user.setVisibilitySettings(visibilitySettings);
+        user.setAboutMe(aboutMe);
+        user.setAccountEnabled(true);
+        user.setAccountNonLocked(true);
 
         userRepository.save(user);
     }
@@ -104,6 +102,44 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public boolean updateVisibilitySettings(UserVisibilitySettings visibilityRequest, String confirmationPassword) {
+        User originalUser = findUserByUsername(CommonUtils.getUserInfo());
+
+        if (CommonUtils.checkPasswordsMatch(confirmationPassword, originalUser.getPassword())) {
+            originalUser.setVisibilitySettings(visibilityRequest);
+            userRepository.save(originalUser);
+            return true;
+        }
+        return false;
+    }
+
+    public void addAboutMe(UserAboutMe aboutMe) {
+        User user = findUserByUsername(CommonUtils.getUserInfo());
+
+        if (!user.getAboutMe().isEmpty()) {
+            throw new AccessDeniedException("About Me Already Exists");
+        }
+
+        user.setAboutMe(aboutMe);
+        userRepository.save(user);
+    }
+
+    public void updateUserAboutMe(UserAboutMe userAboutMe, String confirmationPassword) {
+        User user = findUserByUsername(CommonUtils.getUserInfo());
+
+        if (!CommonUtils.checkPasswordsMatch(confirmationPassword, user.getPassword())) {
+            throw new PasswordException("Passwords Does Not Match");
+        }
+
+        user.setAboutMe(userAboutMe);
+        userRepository.save(user);
+    }
+
+    public void deleteAboutMe(User user) {
+        user.setAboutMe(null);
+        userRepository.save(user);
     }
 
     public Boolean deactivateUser(HttpServletRequest httpServletRequest, String confirmPassword) {
