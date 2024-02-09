@@ -1,6 +1,5 @@
 package com.sefaunal.resumebuilder.Model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**

@@ -12,6 +12,8 @@ import com.sefaunal.resumebuilder.Utils.ImageUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,14 +33,14 @@ import java.util.Objects;
 public class UserService {
     private final UserRepository userRepository;
 
-    public User findUserByEmail(String userMail) {
-        return userRepository.findByEmail(userMail)
-                .orElseThrow(() -> new UsernameNotFoundException("No user found with " + userMail));
-    }
-
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("No user found with " + username));
+    }
+
+    public User findUserByID(String ID) {
+        return userRepository.findById(ID)
+                .orElseThrow(() -> new UsernameNotFoundException("No user found with " + ID));
     }
 
     public boolean isEmailFree(String email) {
@@ -158,5 +160,35 @@ public class UserService {
             }
         }
         return false;
+    }
+
+    public Page<User> findByRoleWithPageable(String role, Pageable pageable) {
+        return userRepository.findByRole(role, pageable);
+    }
+
+    public void grantAdminPrivileges(User user) {
+        user.setRole("ADMIN");
+        userRepository.save(user);
+    }
+
+    public void revokeAdminPrivileges(User user) {
+        user.setRole("USER");
+        userRepository.save(user);
+    }
+
+    public void banUser(User user) {
+        user.setRole("BANNED");
+        user.setAccountNonLocked(false);
+        user.setAccountEnabled(false);
+
+        userRepository.save(user);
+    }
+
+    public void unbanUser(User user) {
+        user.setRole("USER");
+        user.setAccountNonLocked(true);
+        user.setAccountEnabled(true);
+
+        userRepository.save(user);
     }
 }
