@@ -63,7 +63,7 @@ svg,img { max-width: 100%; height: auto; }
 ----------------------------------------------------------------*/
 .ds-about-section{ padding-top: 60px; padding-bottom: 120px; }
 .ds-heading{ display: inline-block; font-weight: 700; color: #000; text-transform: uppercase; letter-spacing: 1px; font-size: 16px; border-bottom: 3px solid #F26464; padding-bottom: 7px; margin-bottom: 23px; }
-.ds-about-section p{ color: #373737; font-size: 24px; line-height: 40px; font-weight: 300; margin-bottom: 60px; }
+.ds-about-section p{ color: #373737; font-size: 24px; line-height: 40px; font-weight: 300; margin-bottom: 0; }
 
 .ds-button{ display: inline-block; text-transform: uppercase;font-size: 12px;line-height: 13px;font-weight: 600;letter-spacing: 3px; color:#F26464; padding:17px 30px;  border: 2px solid #F26464;border-radius: 60px; }
 .ds-button:hover{ background-color:#F26464 ; color: #FFF; }

@@ -1,5 +1,6 @@
 package com.sefaunal.resumebuilder.Controller;
 
+import com.itextpdf.html2pdf.HtmlConverter;
 import com.sefaunal.resumebuilder.Model.Experience;
 import com.sefaunal.resumebuilder.Model.Project;
 import com.sefaunal.resumebuilder.Model.Skill;
@@ -13,6 +14,7 @@ import com.sefaunal.resumebuilder.Service.SkillService;
 import com.sefaunal.resumebuilder.Service.UserService;
 import com.sefaunal.resumebuilder.Utils.CommonUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.security.Principal;
 import java.util.Collection;
 
@@ -45,6 +51,8 @@ public class UserController {
     private final ExperienceService experienceService;
 
     private final ProjectService projectService;
+
+    private final TemplateEngine templateEngine;
 
     @GetMapping("/resume")
     public ModelAndView resumePage(Principal principal, Model model) {
@@ -187,5 +195,43 @@ public class UserController {
         model.addAttribute("otherSkills", otherSkills);
         model.addAttribute("workExperiences", experiences);
         model.addAttribute("latestWorks", projects);
+    }
+
+    @GetMapping("/resume/download")
+    public void downloadResume(Principal principal, HttpServletResponse response) throws Exception {
+        User userData = userService.findUserByUsername(principal.getName());
+
+        Collection<Project> projects = projectService.findAllProjectsByUserID(userData.getID());
+        Collection<Skill> coreSkills = skillService.findAllCoreSkillsByUserID(userData.getID());
+        Collection<Skill> otherSkills = skillService.findAllOtherSkillsByUserID(userData.getID());
+        Collection<Experience> experiences = experienceService.findAllExperiencesByUserID(userData.getID());
+
+        // Create a Thymeleaf context
+        Context context = new Context();
+
+        // Add user data to the context
+        context.setVariable("user", userData);
+        context.setVariable("coreSkills", coreSkills);
+        context.setVariable("otherSkills", otherSkills);
+        context.setVariable("workExperiences", experiences);
+        context.setVariable("latestWorks", projects);
+
+        // Render the HTML template using Thymeleaf
+        String htmlContent = templateEngine.process("ResumeTemplate", context);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        // Convert HTML to PDF
+        HtmlConverter.convertToPdf(htmlContent, outputStream);
+
+        // Set the response headers
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=\"resume.pdf\"");
+
+        // Write the PDF to the response output stream
+        OutputStream responseOutputStream = response.getOutputStream();
+        outputStream.writeTo(responseOutputStream);
+        responseOutputStream.flush();
+        responseOutputStream.close();
     }
 }

@@ -63,6 +63,7 @@ public class ExperienceService {
         }
 
         experience.setCompany(experienceRequest.getCompany());
+        experience.setLocation(experienceRequest.getLocation());
         experience.setJobTitle(experienceRequest.getJobTitle());
         experience.setStartDate(experienceRequest.getStartDate());
         experience.formatStartDate(experienceRequest.getStartDate());

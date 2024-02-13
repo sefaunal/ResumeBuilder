@@ -25,4 +25,6 @@ public class UserVisibilitySettings {
     private boolean showExperiencesSection;
 
     private boolean showLatestWorksSection;
+
+    private boolean showPhoneNumber;
 }

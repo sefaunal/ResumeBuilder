@@ -20,6 +20,8 @@ public class Experience {
 
     private String company;
 
+    private String location;
+
     private String jobTitle;
 
     private Date startDate;

@@ -201,6 +201,15 @@
                       </td>
                     </tr>
 
+                    <tr>
+                      <td class="text-nowrap">Show phone number on downloaded PDF</td>
+                      <td>
+                        <div class="form-check d-flex justify-content-center">
+                          <input class="form-check-input" type="checkbox" name="showPhoneNumber" th:checked="${user.getVisibilitySettings().isShowPhoneNumber()}" />
+                        </div>
+                      </td>
+                    </tr>
+
                     </tbody>
                   </table>
 

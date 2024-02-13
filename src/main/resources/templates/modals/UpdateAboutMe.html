@@ -33,6 +33,42 @@
 
             <div class="mb-3 col-md-6">
                 <div class="col mb-3">
+                    <label class="form-label" for="jobPosition">Job/Position</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${user.aboutMe.jobPosition}"
+                                name="jobPosition"
+                                type="text"
+                                class="form-control"
+                                id="jobPosition"
+                                placeholder="jobPosition"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="phoneNumber">Phone Number</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${user.aboutMe.phoneNumber}"
+                                name="phoneNumber"
+                                type="text"
+                                class="form-control"
+                                id="phoneNumber"
+                                placeholder="User ID"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
                     <label class="form-label" for="briefIntroduction">Brief Introduction</label>
                     <div class="input-group">
                         <input
