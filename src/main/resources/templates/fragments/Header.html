@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <span class="fw-medium d-block" th:text="${user.firstName + ' ' + user.lastName}">John Doe</span>
-                                    <small class="text-muted" th:text="${user.role}">User</small>
+                                    <small class="text-muted" th:text="'@' + ${user.username}">username</small>
                                 </div>
                             </div>
                         </a>

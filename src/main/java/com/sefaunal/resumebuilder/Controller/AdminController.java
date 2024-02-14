@@ -1,6 +1,12 @@
 package com.sefaunal.resumebuilder.Controller;
 
+import com.sefaunal.resumebuilder.Model.Experience;
+import com.sefaunal.resumebuilder.Model.Project;
+import com.sefaunal.resumebuilder.Model.Skill;
 import com.sefaunal.resumebuilder.Model.User;
+import com.sefaunal.resumebuilder.Service.ExperienceService;
+import com.sefaunal.resumebuilder.Service.ProjectService;
+import com.sefaunal.resumebuilder.Service.SkillService;
 import com.sefaunal.resumebuilder.Service.UserService;
 import com.sefaunal.resumebuilder.Utils.CommonUtils;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.Collection;
 
 /**
  * @author github.com/sefaunal
@@ -27,6 +34,12 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class AdminController {
     private final UserService userService;
+
+    private final SkillService skillService;
+
+    private final ExperienceService experienceService;
+
+    private final ProjectService projectService;
 
     private static final Integer REQUEST_SIZE = 50;
 
@@ -80,6 +93,27 @@ public class AdminController {
 
         model.addAttribute("user", user);
         return new ModelAndView("panel/BannedList");
+    }
+
+    @GetMapping("/panel/view")
+    public ModelAndView viewUserResume(@RequestParam String ID, Principal principal, Model model) {
+        User user = userService.findUserByUsername(principal.getName());
+        User userData = userService.findUserByID(ID);
+
+        Collection<Skill> coreSkills = skillService.findAllCoreSkillsByUserID(userData.getID());
+        Collection<Project> projects = projectService.findAllProjectsByUserID(userData.getID());
+        Collection<Skill> otherSkills = skillService.findAllOtherSkillsByUserID(userData.getID());
+        Collection<Experience> experiences = experienceService.findAllExperiencesByUserID(userData.getID());
+
+        model.addAttribute("coreSkills", coreSkills);
+        model.addAttribute("otherSkills", otherSkills);
+        model.addAttribute("workExperiences", experiences);
+        model.addAttribute("latestWorks", projects);
+
+        model.addAttribute("user", user);
+        model.addAttribute("userData", userData);
+
+        return new ModelAndView("ViewResume");
     }
 
     @GetMapping("/panel/config/grant")

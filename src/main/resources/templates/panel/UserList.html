@@ -126,6 +126,11 @@
                             <i class="bx bx-dots-vertical-rounded"></i>
                           </button>
                           <div class="dropdown-menu">
+                            <a class="dropdown-item" th:href = "@{/admin/panel/view(ID=${singleItem.getID()})}">
+                              <i class="bx bx-show me-1"></i>
+                              View User's Resume
+                            </a>
+
                             <a class="dropdown-item" th:href = "@{/admin/panel/config/grant(ID=${singleItem.getID()})}">
                               <i class="bx bx-plus me-1"></i>
                               Grant Admin Privileges
