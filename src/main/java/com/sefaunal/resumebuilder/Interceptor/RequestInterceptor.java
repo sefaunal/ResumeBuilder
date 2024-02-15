@@ -17,6 +17,15 @@ public class RequestInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull Object handler) {
+        // Get the requested URI
+        String requestedUri = request.getRequestURI();
+
+        // Check if the requested URI contains "/static/" or ends with common static resource extensions
+        if (requestedUri.contains("/static/") || isStaticResource(requestedUri)) {
+            // Skip logging for static resource requests
+            return true;
+        }
+
         // Log user's mail address if logged in
         LOG.info("Username: {}", CommonUtils.getUserInfo());
 
@@ -35,5 +44,17 @@ public class RequestInterceptor implements HandlerInterceptor {
         LOG.info("User's IP Address: {}", CommonUtils.getIpAddress(request));
 
         return true;
+    }
+
+    private boolean isStaticResource(String uri) {
+        String[] staticResourceExtensions = {".css", ".js", ".html", ".png", ".ico", ".jpg", ".svg", ".eot", ".ttf", ".woff", ".woff2"};
+
+        for (String extension : staticResourceExtensions) {
+            if (uri.endsWith(extension)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

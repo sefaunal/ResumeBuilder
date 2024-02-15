@@ -174,7 +174,7 @@
                       <section>
                         <h3 class="ds-work-tilte" th:text="${project.getTitle()}">Tripy mobile app</h3>
                         <p th:text="${project.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                        <a href="works-setails.html" class="ds-button">Details</a>
+                        <a th:href="@{/user/project/details(ID=${project.getID()})}" class="ds-button">Details</a>
                       </section>
                     </div>
                     <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5">

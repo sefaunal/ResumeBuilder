@@ -100,8 +100,8 @@ span.ds-department{ color: #373737; font-weight: 500; font-size: 18px; padding-b
 .ds-work-list p{ font-weight: 300; font-size: 18px; line-height: 30px; }
 .ds-work-list .ds-button{ margin-top: 20px; }
 
-.ds-work-det-hed{ padding-top: 42px; padding-bottom: 80px; }
-.ds-work-det-title{ font-weight: 600; color:#000; font-size: 48px; margin-bottom: 20px; }
+.ds-work-det-hed{ padding-top: 42px; padding-bottom: 60px; text-align: center }
+.ds-work-det-title{ font-weight: 600; color:#000; font-size: 48px; margin-bottom: 0; }
 .ds-work-det-dep{ display:block;font-weight: 600; color: #000; font-size: 18px; }
 .ds-work-content-sec{ padding: 100px 0; }
 .ds-work-content-sec p{ font-size: 18px; line-height: 36px; margin-bottom: 30px; }
@@ -178,18 +178,11 @@ span.ds-department{ color: #373737; font-weight: 500; font-size: 18px; padding-b
 	color: #697A8D;
 }
 
-figure {
-	margin: 0;
-	background-size: cover;
-	background-position: center;
-	width: 100%;
-	height: 100%;
+.project_img {
+	display: flex;
+	justify-content: center;
 }
 
 #profile-image {
-	background-size: cover;
-	background-position: center;
-	width: 100%;
-	height: 100%;
 	border-radius: 40px;
 }

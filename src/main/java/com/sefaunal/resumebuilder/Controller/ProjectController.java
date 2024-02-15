@@ -73,4 +73,16 @@ public class ProjectController {
 
         return new RedirectView("/user/resume/details");
     }
+
+    @GetMapping("/details")
+    public ModelAndView viewProjectDetails(@RequestParam String ID, Principal principal, Model model) {
+        User user = userService.findUserByUsername(principal.getName());
+
+        Project project = projectService.findRecordByID(ID);
+
+        model.addAttribute("project", project);
+        model.addAttribute("user", user);
+
+        return new ModelAndView("ProjectDetails");
+    }
 }
