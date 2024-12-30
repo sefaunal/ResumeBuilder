@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modal</title>
+</head>
+<body>
+
+<div th:fragment="aboutMe" class="modal fade" id="aboutMeModal" style="display: none" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add About Me</h5>
+        <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close">
+
+        </button>
+      </div>
+
+      <form method="POST" th:action="@{/user/about/add}">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col mb-3">
+              <label for="jobPosition" class="form-label">Job/Position</label>
+              <input
+                      name="jobPosition"
+                      type="text"
+                      id="jobPosition"
+                      class="form-control"
+                      placeholder="Job/Position"
+                      required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-3">
+              <label for="phoneNumber" class="form-label">Phone Number</label>
+              <input
+                      name="phoneNumber"
+                      type="tel"
+                      id="phoneNumber"
+                      class="form-control"
+                      placeholder="Phone Number"
+                      required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-3">
+              <label for="briefIntroduction" class="form-label">Brief Introduction</label>
+              <input
+                      name="briefIntroduction"
+                      type="text"
+                      id="briefIntroduction"
+                      class="form-control"
+                      placeholder="Brief Introduction"
+                      required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-3">
+              <label for="experienceYearsCount" class="form-label">Total Experience</label>
+              <input
+                      name="experienceYearsCount"
+                      type="number"
+                      id="experienceYearsCount"
+                      class="form-control"
+                      placeholder="Total Experience"
+                      required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-3">
+              <label for="projectsCount" class="form-label">Total Projects</label>
+              <input
+                      name="projectsCount"
+                      type="number"
+                      id="projectsCount"
+                      class="form-control"
+                      placeholder="Total Projects"
+                      required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-3">
+              <label for="happyClientsCount" class="form-label">Total Happy Clients</label>
+              <input
+                      name="happyClientsCount"
+                      type="number"
+                      id="happyClientsCount"
+                      class="form-control"
+                      placeholder="Total Happy Clients"
+                      required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-0">
+              <label for="aboutMeSection" class="form-label">About Me Section</label>
+              <textarea
+                      class="form-control"
+                      id="aboutMeSection"
+                      name="aboutMeSection"
+                      rows="3"
+                      placeholder="About Me Section"
+                      required></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

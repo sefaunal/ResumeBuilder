@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+</head>
+<body>
+
+
+<!--    Experience Update   -->
+<div th:fragment="experience" class="card mb-4">
+    <h5 class="card-header">Update Experience</h5>
+    <div class="card-body">
+
+        <form id="updateSkill" th:action="@{/user/experience/update}" method="post">
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="experienceID">Experience ID</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${experience.ID}"
+                                name="ID"
+                                type="text"
+                                class="form-control"
+                                id="experienceID"
+                                placeholder="Experience ID"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                                readonly
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="companyName">Company Name</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${experience.company}"
+                                type="text"
+                                name="company"
+                                class="form-control"
+                                id="companyName"
+                                placeholder="Company Name"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${experience.location}"
+                                type="text"
+                                name="location"
+                                class="form-control"
+                                id="location"
+                                placeholder="City, Country"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="jobTitle">Job Title</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${experience.jobTitle}"
+                                type="text"
+                                name="jobTitle"
+                                class="form-control"
+                                id="jobTitle"
+                                placeholder="Job Title"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label for="startDate" class="form-label">Start Date</label>
+                    <input type="date" id="startDate" name="startDate" class="form-control"
+                           th:value="${#dates.format(experience.startDate, 'yyyy-MM-dd')}"
+                           required
+                    />
+                </div>
+
+                <div class="col mb-3">
+                    <label for="endDate" class="form-label">End Date</label>
+                    <input type="date" id="endDate" name="endDate" class="form-control"
+                           th:value="${#dates.format(experience.endDate, 'yyyy-MM-dd')}"
+                    />
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-0">
+                    <label for="jobDescription" class="form-label">Job Description</label>
+                    <textarea
+                            th:utext="${experience.description}"
+                            class="form-control"
+                            id="jobDescription"
+                            name="description"
+                            rows="3"
+                            placeholder="Description"
+                            required></textarea>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="form-password-toggle">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-group">
+                        <input
+                                minlength="8"
+                                id="password"
+                                type="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                aria-describedby="basic-default-password2"
+                                required
+                        />
+                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary me-2">Update Experience</button>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

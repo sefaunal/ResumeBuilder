@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Project Details</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+          href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet" />
+
+  <link rel="stylesheet" href="/static/css/Sneat/boxicons.css" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="/static/css/Sneat/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="/static/css/Sneat/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="/static/css/Sneat/demo.css" />
+
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="/static/css/Sneat/perfect-scrollbar.css" />
+
+  <!-- Page CSS -->
+  <!-- Page -->
+  <link rel="stylesheet" href="/static/css/resume.css" />
+
+  <!-- Helpers -->
+  <script src="/static/js/Sneat/helpers.js"></script>
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="/static/js/Sneat/config.js"></script>
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar layout-without-menu">
+  <div class="layout-container">
+    <!-- Layout container -->
+    <div class="layout-page">
+      <!-- Navbar -->
+      <nav th:replace="fragments/Header :: header"></nav>
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+          <main class="ds-main-section">
+            <div class="container">
+              <div class="ds-work-details-section">
+                <div class="text-center">
+                  <a href="#" class="ds-button ds-arrow-button" onclick="history.back()"><i class="ri-arrow-left-s-line"></i> Back</a>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
+                    <header class="ds-work-det-hed">
+                      <h1 class="ds-work-det-title" th:text="${project.getTitle()}">Project Title</h1>
+                    </header>
+                    <figure class="project_img"><img alt="project_img" th:src="${project.getImageURI()}"></figure>
+                    <div class="ds-work-content-sec">
+                      <div class="row justify-content-center">
+                        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                          <p th:text="${project.getDescription()}">Phasellus non faucibus purus, a venenatis diam. In faucibus orci mauris, porttitor egestas diam elementum non.
+                            Vestibulum non metus tempus, sagittis libero sed, euismod purus. Cras dolor nulla, hendrerit vitae libero eu,
+                            finibus ultricies dolor. Vestibulum non metus tempus, sagittis libero sed, euismod purus. Cras dolor nulla,
+                            hendrerit vitae libero eu, finibus ultricies dolor.</p>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+
+        </div>
+
+        <!-- Footer -->
+        <footer th:replace="fragments/Footer :: footer"></footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+      </div>
+      <!-- Content wrapper -->
+    </div>
+    <!-- / Layout page -->
+  </div>
+</div>
+<!-- / Layout wrapper -->
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+
+<script src="/static/js/Sneat/jquery.js"></script>
+<script src="/static/js/Sneat/popper.js"></script>
+<script src="/static/js/Sneat/bootstrap.js"></script>
+<script src="/static/js/Sneat/perfect-scrollbar.js"></script>
+<script src="/static/js/Sneat/menu.js"></script>
+
+<script src="/static/js/Sneat/main.js"></script>
+
+<!-- Page JS -->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

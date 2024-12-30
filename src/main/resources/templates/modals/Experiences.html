@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modal</title>
+</head>
+<body>
+
+<div th:fragment="experiences" class="modal fade" id="experiencesModal" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Experience</h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                </button>
+            </div>
+
+            <form method="POST" th:action="@{/user/experience/add}">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameWithTitle" class="form-label">Company Name*</label>
+                            <input
+                                    name="company"
+                                    type="text"
+                                    id="nameWithTitle"
+                                    class="form-control"
+                                    placeholder="Enter Your Company"
+                                    required />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="location" class="form-label">Location*</label>
+                            <input
+                                    name="location"
+                                    type="text"
+                                    id="location"
+                                    class="form-control"
+                                    placeholder="City, Country"
+                                    required />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="jobTitle" class="form-label">Job Title*</label>
+                            <input
+                                    name="jobTitle"
+                                    type="text"
+                                    id="jobTitle"
+                                    class="form-control"
+                                    placeholder="Enter Your Job Title"
+                                    required />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="startDate" class="form-label">Start Date*</label>
+                            <input type="date" id="startDate" name="startDate" class="form-control" required/>
+                        </div>
+
+                        <div class="col mb-3">
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" id="endDate" name="endDate" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col mb-0">
+                            <label for="jobDescription" class="form-label">Job Description*</label>
+                            <textarea
+                                    class="form-control"
+                                    id="jobDescription"
+                                    name="description"
+                                    rows="3"
+                                    placeholder="Description"
+                                    required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+spring:
+  data:
+    mongodb:
+      uri: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.2"
+      database: "ResumeBuilder"
+  thymeleaf:
+    cache: true
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+  mvc:
+    format:
+      date: yyyy-MM-dd
+    static-path-pattern: /static/**
+  servlet:
+    multipart:
+      max-file-size: 15MB
+
+remember:
+  secret-key: 0Ufaswi33sl2lbe5widriwohedoxuphu8h@9athuw3a7tono

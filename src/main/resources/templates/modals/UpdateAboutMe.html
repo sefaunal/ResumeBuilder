@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+</head>
+<body>
+
+
+<!--    About Me Update     -->
+<div th:fragment="aboutme" class="card mb-4">
+    <h5 class="card-header">Update Skill</h5>
+    <div class="card-body">
+
+        <form id="updateSkill" th:action="@{/user/about/update}" method="post">
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="userID">UserID</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${user.ID}"
+                                type="text"
+                                class="form-control"
+                                id="userID"
+                                placeholder="User ID"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                                readonly
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="jobPosition">Job/Position</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${user.aboutMe.jobPosition}"
+                                name="jobPosition"
+                                type="text"
+                                class="form-control"
+                                id="jobPosition"
+                                placeholder="jobPosition"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="phoneNumber">Phone Number</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${user.aboutMe.phoneNumber}"
+                                name="phoneNumber"
+                                type="text"
+                                class="form-control"
+                                id="phoneNumber"
+                                placeholder="User ID"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="briefIntroduction">Brief Introduction</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${user.aboutMe.briefIntroduction}"
+                                type="text"
+                                name="briefIntroduction"
+                                class="form-control"
+                                id="briefIntroduction"
+                                placeholder="Brief Introduction"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="experienceYearsCount">Total Experience</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${user.aboutMe.experienceYearsCount}"
+                                type="number"
+                                name="experienceYearsCount"
+                                class="form-control"
+                                id="experienceYearsCount"
+                                placeholder="Experience Years"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="projectsCount">Total Project</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${user.aboutMe.projectsCount}"
+                                type="number"
+                                name="projectsCount"
+                                class="form-control"
+                                id="projectsCount"
+                                placeholder="Projects"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="happyClientsCount">Happy Clients Count</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${user.aboutMe.happyClientsCount}"
+                                type="number"
+                                name="happyClientsCount"
+                                class="form-control"
+                                id="happyClientsCount"
+                                placeholder="Happy Clients Count"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="col mb-3">
+                    <label class="form-label" for="aboutMeSection">About Me Section</label>
+                    <div class="input-group">
+                        <input
+                                th:value="${user.aboutMe.aboutMeSection}"
+                                type="tel"
+                                name="aboutMeSection"
+                                class="form-control"
+                                id="aboutMeSection"
+                                placeholder="About Me Section"
+                                aria-describedby="defaultFormControlHelp"
+                                required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <div class="form-password-toggle">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-group">
+                        <input
+                                minlength="8"
+                                id="password"
+                                type="password"
+                                name="confirmationPassword"
+                                class="form-control"
+                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                aria-describedby="basic-default-password2"
+                                required
+                        />
+                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary me-2">Update About Me</button>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

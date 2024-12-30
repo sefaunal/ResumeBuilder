@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>My Resume</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet" />
+
+    <link rel="stylesheet" href="/static/css/Sneat/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/static/css/Sneat/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/static/css/Sneat/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/static/css/Sneat/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="/static/css/Sneat/perfect-scrollbar.css" />
+
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="/static/css/resume.css" />
+
+    <!-- Helpers -->
+    <script src="/static/js/Sneat/helpers.js"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="/static/js/Sneat/config.js"></script>
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+
+<!--        <aside th:replace="fragments/Sidebar :: sidebar"></aside>-->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+
+            <nav th:replace="fragments/Header :: header"></nav>
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Content -->
+
+                <div class="container-xxl flex-grow-1 container-p-y">
+
+                    <!-- Toast with Placements -->
+                    <div th:if="${errorStatus.equals('pass')}"
+                            id="notification-toast"
+                            class="bs-toast toast toast-placement-ex m-2 fade top-0 end-0 show bg-danger"
+                            role="alert"
+                            aria-live="assertive"
+                            aria-atomic="true"
+                            data-bs-delay="2000">
+                        <div class="toast-header">
+                            <i class="bx bx-bell me-2"></i>
+                            <div class="me-auto fw-medium">Resume Builder</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">Failed to update details! Please check if the password you entered is correct</div>
+                    </div>
+                    <!-- Toast with Placements -->
+
+                    <!-- Toast with Placements -->
+                    <div th:if="${errorStatus.equals('success')}"
+                         id="notification-toast-success"
+                         class="bs-toast toast toast-placement-ex m-2 fade top-0 end-0 show bg-secondary"
+                         role="alert"
+                         aria-live="assertive"
+                         aria-atomic="true"
+                         data-bs-delay="2000">
+                        <div class="toast-header">
+                            <i class="bx bx-bell me-2"></i>
+                            <div class="me-auto fw-medium">Resume Builder</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">Your details have been successfully updated</div>
+                    </div>
+                    <!-- Toast with Placements -->
+
+                    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Resume</h4>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/profile"><i class="bx bx-user me-1"></i> Account</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/visibility"><i class="bx bx-low-vision me-1"></i> Visibility</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#"><i class="bx bx-link-alt me-1"></i> Resume</a>
+                                </li>
+                            </ul>
+
+
+                            <div class="card">
+                                <div th:replace="modals/CoreSkills :: coreSkills"></div>
+                                <div th:replace="modals/OtherSkills :: otherSkills"></div>
+                                <div th:replace="modals/Experiences :: experiences"></div>
+                                <div th:replace="modals/Project :: project"></div>
+                                <div th:replace="modals/AboutMe :: aboutMe"></div>
+                            </div>
+
+                            <!-- About Me Section Table -->
+                            <div class="card">
+                                <div class="card-header flex-column flex-md-row borderless-table-header">
+                                    <div class="head-label text-center">
+                                        <h5 class="card-title mb-0">About Me</h5>
+                                    </div>
+                                    <div class="dt-action-buttons text-end pt-3 pt-md-0" th:if="${user.getAboutMe().isEmpty()}">
+                                        <div class="dt-buttons">
+                                            <button class="dt-button create-new btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#aboutMeModal">
+                                                <i class="bx bx-plus me-sm-1"></i>
+                                                <span class="d-none d-sm-inline-block">Add New Record</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table table-borderless">
+
+                                        <thead>
+                                        <tr>
+                                            <th>Total Experience</th>
+                                            <th>Projects Count</th>
+                                            <th>Happy Clients</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody th:if="${!user.getAboutMe().isEmpty()}">
+                                        <tr>
+                                            <td>
+                                                <span th:text="${user.getAboutMe().getExperienceYearsCount()}" class="fw-medium">Experience - X</span>
+                                            </td>
+
+                                            <td>
+                                                <span th:text="${user.getAboutMe().getProjectsCount()}">Projects - X</span>
+                                            </td>
+
+                                            <td>
+                                                <span th:text="${user.getAboutMe().getHappyClientsCount()}">Clients - X</span>
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" th:href = "@{/user/about/update}">
+                                                            <i class="bx bx-edit-alt me-1"></i>
+                                                            Edit
+                                                        </a>
+
+                                                        <a class="dropdown-item" th:href = "@{/user/about/delete}">
+                                                            <i class="bx bx-trash me-1"></i>
+                                                            Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--/ Borderless Table -->
+
+                            <hr class="my-5" />
+
+                            <!-- Borderless Table -->
+                            <div class="card">
+                                <div class="card-header flex-column flex-md-row borderless-table-header">
+                                    <div class="head-label text-center">
+                                        <h5 class="card-title mb-0">Core Skills</h5>
+                                    </div>
+                                    <div class="dt-action-buttons text-end pt-3 pt-md-0">
+                                        <div class="dt-buttons">
+                                            <button class="dt-button create-new btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#coreSkillsModal">
+                                                <i class="bx bx-plus me-sm-1"></i>
+                                                <span class="d-none d-sm-inline-block">Add New Record</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table table-borderless">
+
+                                        <thead>
+                                        <tr>
+                                            <th>Skill Name</th>
+                                            <th>Skill Type</th>
+                                            <th>Date of Addition</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr th:each = "coreSkill : ${coreSkills}">
+                                            <td>
+                                                <span th:text="${coreSkill.getSkillName()}" class="fw-medium">Skill - X</span>
+                                            </td>
+
+                                            <td>
+                                                <span class="fw-medium">Core</span>
+                                            </td>
+
+                                            <td>
+                                                <span th:text="${coreSkill.getAdditionDate()}">Date - X</span>
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" th:href = "@{/user/skill/update(ID=${coreSkill.getID()})}">
+                                                            <i class="bx bx-edit-alt me-1"></i>
+                                                            Edit
+                                                        </a>
+
+                                                        <a class="dropdown-item" th:href = "@{/user/skill/delete(ID=${coreSkill.getID()})}">
+                                                            <i class="bx bx-trash me-1"></i>
+                                                            Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--/ Borderless Table -->
+
+                            <hr class="my-5" />
+
+                            <!-- Borderless Table - 2 -->
+                            <div class="card">
+
+                                <div class="card-header flex-column flex-md-row borderless-table-header">
+                                    <div class="head-label text-center">
+                                        <h5 class="card-title mb-0">Other Skills</h5>
+                                    </div>
+                                    <div class="dt-action-buttons text-end pt-3 pt-md-0" type="button" data-bs-toggle="modal" data-bs-target="#otherSkillsModal">
+                                        <div class="dt-buttons">
+                                            <button class="dt-button create-new btn btn-primary">
+                                                <i class="bx bx-plus me-sm-1"></i>
+                                                <span class="d-none d-sm-inline-block">Add New Record</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table table-borderless">
+
+                                        <thead>
+                                        <tr>
+                                            <th>Skill Name</th>
+                                            <th>Skill Type</th>
+                                            <th>Date of Addition</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr th:each = "otherSkill : ${otherSkills}">
+                                            <td>
+                                                <span th:text="${otherSkill.getSkillName()}" class="fw-medium">Skill - X</span>
+                                            </td>
+
+                                            <td>
+                                                <span class="fw-medium">Other</span>
+                                            </td>
+
+                                            <td>
+                                                <span th:text="${otherSkill.getAdditionDate()}">Date - X</span>
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" th:href="@{/user/skill/update(ID=${otherSkill.getID()})}"
+                                                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                                                        >
+                                                        <a class="dropdown-item" th:href = "@{/user/skill/delete(ID=${otherSkill.getID()})}"
+                                                        ><i class="bx bx-trash me-1"></i> Delete</a
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--/ Borderless Table - 2 -->
+
+                            <hr class="my-5" />
+
+                            <!-- Borderless Table - 3 -->
+                            <div class="card">
+
+                                <div class="card-header flex-column flex-md-row borderless-table-header">
+                                    <div class="head-label text-center">
+                                        <h5 class="card-title mb-0">Work Experience</h5>
+                                    </div>
+                                    <div class="dt-action-buttons text-end pt-3 pt-md-0">
+                                        <div class="dt-buttons">
+                                            <button class="dt-button create-new btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#experiencesModal">
+                                                <i class="bx bx-plus me-sm-1"></i>
+                                                <span class="d-none d-sm-inline-block">Add New Record</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table table-borderless">
+
+                                        <thead>
+                                        <tr>
+                                            <th>Company</th>
+                                            <th>Job title</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Description</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr th:each = "experience : ${workExperiences}">
+                                            <td>
+                                                <span th:text="${experience.getCompany()}" class="fw-medium">Company - X</span>
+                                            </td>
+
+                                            <td>
+                                                <span th:text="${experience.getJobTitle()}">Job Title - X</span>
+                                            </td>
+
+                                            <td>
+                                                <span th:text="${experience.getStartDate()}">Start Date - X</span>
+                                            </td>
+
+                                            <td th:if = "${experience.getEndDate() != null}">
+                                                <span th:text="${experience.getEndDate()}">End Date - X</span>
+                                            </td>
+
+                                            <td th:if = "${experience.getEndDate() == null}">
+                                                <span>Present</span>
+                                            </td>
+
+                                            <td class="desc-text">
+                                                <span th:text="${experience.getDescription()}">Description - X</span>
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" th:href = "@{/user/experience/update(ID=${experience.getID()})}"
+                                                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                                                        >
+                                                        <a class="dropdown-item" th:href = "@{/user/experience/delete(ID=${experience.getID()})}"
+                                                        ><i class="bx bx-trash me-1"></i> Delete</a
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--/ Borderless Table - 3 -->
+
+                            <hr class="my-5" />
+
+                            <!-- Borderless Table - 4 -->
+                            <div class="card">
+
+                                <div class="card-header flex-column flex-md-row borderless-table-header">
+                                    <div class="head-label text-center">
+                                        <h5 class="card-title mb-0">Latest Works</h5>
+                                    </div>
+                                    <div class="dt-action-buttons text-end pt-3 pt-md-0">
+                                        <div class="dt-buttons">
+                                            <button class="dt-button create-new btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#projectsModal">
+                                                <i class="bx bx-plus me-sm-1"></i>
+                                                <span class="d-none d-sm-inline-block">Add New Record</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table table-borderless">
+
+                                        <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Image URI</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr th:each = "project : ${latestWorks}">
+                                            <td>
+                                                <span th:text="${project.getTitle()}" class="fw-medium">Title - X</span>
+                                            </td>
+
+                                            <td class="desc-text">
+                                                <span th:text="${project.getDescription()}">Description - X</span>
+                                            </td>
+
+                                            <td class="desc-text">
+                                                <span th:text="${project.getImageURI()}">Photo - X</span>
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" th:href = "@{/user/project/update(ID=${project.getID()})}"
+                                                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                                                        >
+                                                        <a class="dropdown-item" th:href = "@{/user/project/delete(ID=${project.getID()})}"
+                                                        ><i class="bx bx-trash me-1"></i> Delete</a
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--/ Borderless Table - 4 -->
+
+                        </div>
+                    </div>
+                </div>
+                <!-- / Content -->
+
+                <!-- Footer -->
+                <footer th:replace="fragments/Footer :: footer"></footer>
+
+                <div class="content-backdrop fade"></div>
+            </div>
+            <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+
+<script src="/static/js/Sneat/jquery.js"></script>
+<script src="/static/js/Sneat/popper.js"></script>
+<script src="/static/js/Sneat/bootstrap.js"></script>
+<script src="/static/js/Sneat/perfect-scrollbar.js"></script>
+<script src="/static/js/Sneat/menu.js"></script>
+<script src="/static/js/Sneat/main.js"></script>
+</body>
+
+</html>
